@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
+import {useMemo, useState} from "react"
+import Child from "./components/Child";
 
 function App() {
+  const [i, setI] = useState(0)
+
+  const onClickHandler = () => {
+    setI(i + 1)
+  }
+
+  const memoChild = useMemo(() => <Child />, [])
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h3>Use memo</h3>
+        <h2>i: {i}</h2>
+        <button onClick={onClickHandler}>Increment I</button>
+        <h3>normal render</h3>
+        <Child />
+        <h3>memo render</h3>
+        {memoChild}
       </header>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
