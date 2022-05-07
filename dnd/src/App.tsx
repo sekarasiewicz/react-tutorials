@@ -1,26 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { Column } from "./components";
+import { initialData, InitialDataType } from "./data/initialData";
 
-function App() {
+const App: React.FC = () => {
+  const [state, setState] = useState<InitialDataType>(initialData);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {state.columnOrder.map((columnId) => {
+        const column = state.columns[columnId];
+        const tasks = column.taskIds.map((column) => state.tasks[column]);
+
+        return <Column key={column.id} column={column} tasks={tasks} />;
+      })}
+    </>
   );
-}
+};
 
 export default App;
