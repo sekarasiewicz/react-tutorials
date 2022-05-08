@@ -10,6 +10,7 @@ import {
   ResponderProvided,
 } from "react-beautiful-dnd";
 import { Container } from "./App.styles";
+import { InnerColumnList } from "./components/InnerColumnList";
 
 const App: React.FC = () => {
   const [state, setState] = useState<InitialDataType>(initialData);
@@ -112,13 +113,13 @@ const App: React.FC = () => {
           <Container {...provided.droppableProps} ref={provided.innerRef}>
             {state.columnOrder.map((columnId, index) => {
               const column = state.columns[columnId];
-              const tasks = column.taskIds.map((column) => state.tasks[column]);
+              // const tasks = column.taskIds.map((column) => state.tasks[column]);
               const isDropDisabled = index < (state.homeIndex || -1);
               return (
-                <Column
+                <InnerColumnList
                   key={column.id}
                   column={column}
-                  tasks={tasks}
+                  tasksMap={state.tasks}
                   isDropDisabled={isDropDisabled}
                   index={index}
                 />

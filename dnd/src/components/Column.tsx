@@ -1,7 +1,7 @@
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { ColumnType, TaskType } from "../data/initialData";
 import { TaskList, Title, Container } from "./Column.styles";
-import { Task } from "./Task";
+import { InnerList } from "./InnerList";
 
 type ColumnProps = {
   tasks: TaskType[];
@@ -33,9 +33,7 @@ export const Column: React.FC<ColumnProps> = ({
                 {...provided.droppableProps}
                 isDraggingOver={snapshot.isDraggingOver}
               >
-                {tasks.map((task, index) => (
-                  <Task key={task.id} task={task} index={index} />
-                ))}
+                <InnerList tasks={tasks} />
                 {provided.placeholder}
               </TaskList>
             )}
