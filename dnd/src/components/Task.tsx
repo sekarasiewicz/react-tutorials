@@ -1,6 +1,6 @@
 import { Draggable } from "react-beautiful-dnd";
 import { TaskType } from "../data/initialData";
-import { Container } from "./Task.styles";
+import { Container, Handle } from "./Task.styles";
 
 type TaskProps = {
   task: TaskType;
@@ -14,9 +14,9 @@ export const Task: React.FC<TaskProps> = ({ task, index }) => {
         <Container
           ref={provided.innerRef}
           {...provided.draggableProps}
-          {...provided.dragHandleProps}
           isDragging={snapshot.isDragging}
         >
+          <Handle {...provided.dragHandleProps} />
           {task.content}
         </Container>
       )}
