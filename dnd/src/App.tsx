@@ -8,6 +8,7 @@ import {
   DropResult,
   ResponderProvided,
 } from "react-beautiful-dnd";
+import { Container } from "./App.styles";
 
 const App: React.FC = () => {
   const [state, setState] = useState<InitialDataType>(initialData);
@@ -28,16 +29,39 @@ const App: React.FC = () => {
       return;
     }
 
-    const column = state.columns[source.droppableId];
-    const newTaskIds = [...column.taskIds];
-    newTaskIds.splice(source.index, 1);
-    newTaskIds.splice(destination.index, 0, draggableId);
+    const start = state.columns[source.droppableId];
+    const finish = state.columns[destination.droppableId];
 
-    const newColumn = { ...column, taskIds: newTaskIds };
+    if (start === finish) {
+      const newTaskIds = [...start.taskIds];
+      newTaskIds.splice(source.index, 1);
+      newTaskIds.splice(destination.index, 0, draggableId);
+
+      const newColumn = { ...start, taskIds: newTaskIds };
+
+      const newState = {
+        ...state,
+        columns: { ...state.columns, [newColumn.id]: newColumn },
+      };
+      setState(newState);
+      return;
+    }
+
+    const startTaskIds = [...start.taskIds];
+    startTaskIds.splice(source.index, 1);
+    const newStart = { ...start, taskIds: startTaskIds };
+
+    const finishTaskIds = [...finish.taskIds];
+    finishTaskIds.splice(source.index, 0, draggableId);
+    const newFinish = { ...finish, taskIds: finishTaskIds };
 
     const newState = {
       ...state,
-      columns: { ...state.columns, [newColumn.id]: newColumn },
+      columns: {
+        ...state.columns,
+        [newStart.id]: newStart,
+        [newFinish.id]: newFinish,
+      },
     };
     setState(newState);
   };
@@ -64,12 +88,14 @@ const App: React.FC = () => {
       onDragStart={handleDragStart}
       onDragUpdate={handleDragUpdate}
     >
-      {state.columnOrder.map((columnId) => {
-        const column = state.columns[columnId];
-        const tasks = column.taskIds.map((column) => state.tasks[column]);
+      <Container>
+        {state.columnOrder.map((columnId) => {
+          const column = state.columns[columnId];
+          const tasks = column.taskIds.map((column) => state.tasks[column]);
 
-        return <Column key={column.id} column={column} tasks={tasks} />;
-      })}
+          return <Column key={column.id} column={column} tasks={tasks} />;
+        })}
+      </Container>
     </DragDropContext>
   );
 };
