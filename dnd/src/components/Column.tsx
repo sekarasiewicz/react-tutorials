@@ -6,13 +6,22 @@ import { Task } from "./Task";
 type ColumnProps = {
   tasks: TaskType[];
   column: ColumnType;
+  isDropDisabled: boolean;
 };
 
-export const Column: React.FC<ColumnProps> = ({ tasks, column }) => {
+export const Column: React.FC<ColumnProps> = ({
+  tasks,
+  column,
+  isDropDisabled,
+}) => {
   return (
     <Container>
       <Title>{column.title}</Title>
-      <Droppable droppableId={column.id}>
+      <Droppable
+        droppableId={column.id}
+        // type={column.id === "column-3" ? "done" : "active"}
+        isDropDisabled={isDropDisabled}
+      >
         {(provided, snapshot) => (
           <TaskList
             ref={provided.innerRef}

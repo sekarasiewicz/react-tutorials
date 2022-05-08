@@ -14,6 +14,8 @@ const App: React.FC = () => {
   const [state, setState] = useState<InitialDataType>(initialData);
 
   const handleDragEnd = (result: DropResult, provided: ResponderProvided) => {
+    setState({ ...state, homeIndex: null });
+
     document.body.style.color = "inherit";
     document.body.style.backgroundColor = "inherit";
     const { draggableId, source, destination } = result;
@@ -69,6 +71,9 @@ const App: React.FC = () => {
   const handleDragStart = (start: DragStart, provided: ResponderProvided) => {
     document.body.style.color = "orange";
     document.body.style.transition = "background-color 0.2s ease";
+
+    const homeIndex = state.columnOrder.indexOf(start.source.droppableId);
+    setState({ ...state, homeIndex });
   };
 
   const handleDragUpdate = (
@@ -89,11 +94,18 @@ const App: React.FC = () => {
       onDragUpdate={handleDragUpdate}
     >
       <Container>
-        {state.columnOrder.map((columnId) => {
+        {state.columnOrder.map((columnId, index) => {
           const column = state.columns[columnId];
           const tasks = column.taskIds.map((column) => state.tasks[column]);
-
-          return <Column key={column.id} column={column} tasks={tasks} />;
+          const isDropDisabled = index < (state.homeIndex || -1);
+          return (
+            <Column
+              key={column.id}
+              column={column}
+              tasks={tasks}
+              isDropDisabled={isDropDisabled}
+            />
+          );
         })}
       </Container>
     </DragDropContext>

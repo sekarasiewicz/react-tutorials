@@ -13,6 +13,7 @@ export type InitialDataType = {
   tasks: Record<string, TaskType>;
   columns: Record<string, ColumnType>;
   columnOrder: string[];
+  homeIndex?: number | null;
 };
 
 export const initialData: InitialDataType = {

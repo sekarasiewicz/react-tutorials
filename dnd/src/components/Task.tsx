@@ -8,13 +8,19 @@ type TaskProps = {
 };
 
 export const Task: React.FC<TaskProps> = ({ task, index }) => {
+  const isDragDisabled = task.id === "task-1";
   return (
-    <Draggable draggableId={task.id} index={index}>
+    <Draggable
+      draggableId={task.id}
+      index={index}
+      isDragDisabled={isDragDisabled}
+    >
       {(provided, snapshot) => (
         <Container
           ref={provided.innerRef}
           {...provided.draggableProps}
           isDragging={snapshot.isDragging}
+          isDragDisabled={isDragDisabled}
         >
           <Handle {...provided.dragHandleProps} />
           {task.content}
