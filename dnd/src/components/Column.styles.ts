@@ -7,6 +7,7 @@ export const Container = styled.div`
   border: 1px solid lightgray;
   border-radius: 2px;
   width: 220px;
+  background-color: white;
 `;
 
 export const Title = styled.h3`
@@ -19,5 +20,5 @@ export const TaskList = styled.div<{ isDraggingOver?: boolean }>`
   min-height: 100px;
 
   background-color: ${({ isDraggingOver }) =>
-    isDraggingOver ? "skyblue" : "white"};
+    isDraggingOver ? "skyblue" : "inherit"};
 `;
