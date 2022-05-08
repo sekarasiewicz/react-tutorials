@@ -10,6 +10,9 @@ export const Title = styled.h3`
   padding: 8px;
 `;
 
-export const TaskList = styled.div`
+export const TaskList = styled.div<{ isDraggingOver?: boolean }>`
   padding: 8px;
+
+  background-color: ${({ isDraggingOver }) =>
+    isDraggingOver ? "skyblue" : "white"};
 `;

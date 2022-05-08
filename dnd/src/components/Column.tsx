@@ -13,8 +13,12 @@ export const Column: React.FC<ColumnProps> = ({ tasks, column }) => {
     <Container>
       <Title>{column.title}</Title>
       <Droppable droppableId={column.id}>
-        {(provided) => (
-          <TaskList ref={provided.innerRef} {...provided.droppableProps}>
+        {(provided, snapshot) => (
+          <TaskList
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+            isDraggingOver={snapshot.isDraggingOver}
+          >
             {tasks.map((task, index) => (
               <Task key={task.id} task={task} index={index} />
             ))}
