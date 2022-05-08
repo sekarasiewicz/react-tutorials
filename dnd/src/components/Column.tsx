@@ -1,3 +1,4 @@
+import { Droppable } from "react-beautiful-dnd";
 import { ColumnType, TaskType } from "../data/initialData";
 import { TaskList, Title, Container } from "./Column.styles";
 import { Task } from "./Task";
@@ -11,11 +12,16 @@ export const Column: React.FC<ColumnProps> = ({ tasks, column }) => {
   return (
     <Container>
       <Title>{column.title}</Title>
-      <TaskList>
-        {tasks.map((task) => (
-          <Task key={task.id} task={task} />
-        ))}
-      </TaskList>
+      <Droppable droppableId={column.id}>
+        {(provided) => (
+          <TaskList ref={provided.innerRef} {...provided.droppableProps}>
+            {tasks.map((task, index) => (
+              <Task key={task.id} task={task} index={index} />
+            ))}
+            {provided.placeholder}
+          </TaskList>
+        )}
+      </Droppable>
     </Container>
   );
 };
