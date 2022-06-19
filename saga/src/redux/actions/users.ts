@@ -1,9 +1,9 @@
 import * as type from "../actionTypes";
 import { UserType } from '../../types'
 
-export const getUsers = (users: UserType[]) => {
+export const getUsers = (users?: UserType[]) => {
   return {
-    type: type.GET_USERS_SUCCESS,
+    type: type.GET_USERS_REQUEST,
     payload: users,
   };
 };

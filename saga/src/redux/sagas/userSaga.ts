@@ -15,7 +15,7 @@ const getApi = (): Promise<UserType[]> => {
 function* fetchUsers(): Generator {
   try {
     const users = yield call(getApi)
-    yield put({type: 'GET_USERS_SUCCESS', users})
+    yield put({type: 'GET_USERS_SUCCESS', payload: users})
   } catch (e: any) {
     yield put({type: 'GET_USERS_FAILED', message: e.message})
   }
