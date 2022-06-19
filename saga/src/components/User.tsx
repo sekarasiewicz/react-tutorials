@@ -21,5 +21,5 @@ export const User: React.FC<UserProps> = () => {
     }]))
   }, [])
 
-  return <>{users.length !== 0 && users?.map((user) => (<Card user={user} />))}</>
+  return <>{users.length !== 0 ? users?.map((user) => (<Card key={user.id} user={user} />)) : <p>No users</p>}</>
 }
